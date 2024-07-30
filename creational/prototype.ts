@@ -38,7 +38,7 @@ function clientCode() {
     prototypeA.circularReference = new ComponentWithBackReference(prototypeA);
 
     const prototypeB = prototypeA.clone();
-    console.log(prototypeA)
+    
     if (prototypeA.primitive === prototypeB.primitive) {
         console.log(true);
     } else {
