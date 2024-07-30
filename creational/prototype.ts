@@ -1,11 +1,8 @@
-type Primitive = string | number | boolean;
-
 interface IPrototype {
-    primitive: Primitive;
-    component: object;
-    circularReference: ComponentWithBackReference;
     clone(): IPrototype;
 }
+
+type Primitive = string | number | boolean;
 
 class Prototype implements IPrototype {
     public primitive!: Primitive;
@@ -32,3 +29,39 @@ class ComponentWithBackReference {
         this.prototype = prototype;
     }
 }
+
+// client code
+function clientCode() {
+    const prototypeA = new Prototype();
+    prototypeA.primitive = 17;
+    prototypeA.component = new Date();
+    prototypeA.circularReference = new ComponentWithBackReference(prototypeA);
+
+    const prototypeB = prototypeA.clone();
+    console.log(prototypeA)
+    if (prototypeA.primitive === prototypeB.primitive) {
+        console.log(true);
+    } else {
+        console.log(false);
+    }
+
+    if (prototypeA.component === prototypeB.component) {
+        console.log(false);
+    } else {
+        console.log(true);
+    }
+
+    if (prototypeA.circularReference === prototypeB.circularReference) {
+        console.log(false);
+    } else {
+        console.log(true);
+    }
+
+    if (prototypeA.circularReference.prototype === prototypeB.circularReference.prototype) {
+        console.log(false);
+    } else {
+        console.log(true);
+    }
+}
+
+clientCode();
