@@ -19,3 +19,30 @@ abstract class AbstractHandler implements Handler<string, string | null> {
         return null;
     }
 }
+
+class GetHandler extends AbstractHandler {
+    public handle(request: string): string | null {
+        if (request === 'GET') {
+            return `the HTTP ${request} method is called`;
+        }
+        return super.handle(request);
+    }
+}
+
+class PostHandler extends AbstractHandler {
+    public handle(request: string): string | null {
+        if (request === 'POST') {
+            return `the HTTP ${request} method is called`;
+        }
+        return super.handle(request);
+    }
+}
+
+class PutHandler extends AbstractHandler {
+    public handle(request: string): string | null {
+        if (request === 'PUT') {
+            return `the HTTP ${request} method is called`;
+        }
+        return super.handle(request);
+    }
+}
