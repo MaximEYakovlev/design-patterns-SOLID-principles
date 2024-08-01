@@ -52,10 +52,7 @@ const clientCode = (handler: Handler): void => {
 
     methods.forEach(method => {
         const result = handler.handle(method);
-
-        if (result) {
-            console.log(result);
-        }
+        console.log(result);
     })
 }
 
