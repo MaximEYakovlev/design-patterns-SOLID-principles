@@ -97,3 +97,23 @@ class Collection implements IAggregator {
     }
 }
 
+// client code
+const iteratorFactory = new IteratorFactory();
+const collection = new Collection(iteratorFactory);
+
+collection.addItem('first');
+collection.addItem('second');
+collection.addItem('third');
+
+const iterator = collection.getIterator();
+const reverseIterator = collection.getReverseIterator();
+
+while (iterator.valid()) {
+    console.log(iterator.next());
+}
+
+while (reverseIterator.valid()) {
+    console.log(reverseIterator.next());
+}
+
+
