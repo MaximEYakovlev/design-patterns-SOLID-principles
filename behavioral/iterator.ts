@@ -10,6 +10,11 @@ interface IAggregator {
     getIterator(): IIterator<string>;
 }
 
+interface IIteratorFactory {
+    createIterator(collection: Collection): IIterator<string>;
+    createReverseIterator(collection: Collection,): IIterator<string>;
+}
+
 class SomeIterator implements IIterator<string> {
     private collection: Collection;
     private position: number = 0;
@@ -53,8 +58,23 @@ class SomeIterator implements IIterator<string> {
     }
 }
 
+class IteratorFactory implements IIteratorFactory {
+    createIterator(collection: Collection): IIterator<string> {
+        return new SomeIterator(collection);
+    }
+
+    createReverseIterator(collection: Collection): IIterator<string> {
+        return new SomeIterator(collection, true);
+    }
+}
+
 class Collection implements IAggregator {
     private items: string[] = [];
+    private iteratorFactory: IIteratorFactory;
+
+    constructor(iteratorFactory: IIteratorFactory) {
+        this.iteratorFactory = iteratorFactory;
+    }
 
     public getItems(): string[] {
         return this.items;
@@ -69,10 +89,11 @@ class Collection implements IAggregator {
     }
 
     public getIterator(): IIterator<string> {
-        return new SomeIterator(this);
+        return this.iteratorFactory.createIterator(this);
     }
 
     public getReverseIterator(): IIterator<string> {
-        return new SomeIterator(this, true);
+        return this.iteratorFactory.createReverseIterator(this);
     }
 }
+
