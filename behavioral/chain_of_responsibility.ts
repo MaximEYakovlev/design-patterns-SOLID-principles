@@ -1,12 +1,12 @@
-interface Handler<Request = string, Result = string> {
-    setNext(handler: Handler<Request, Result>): Handler<Request, Result>;
+interface IHandler<Request = string, Result = string> {
+    setNext(handler: IHandler<Request, Result>): IHandler<Request, Result>;
     handle(request: Request): Result;
 }
 
-abstract class AbstractHandler implements Handler<string, string> {
-    private nextHandler: Handler<string, string> | null = null;
+abstract class AbstractHandler implements IHandler<string, string> {
+    private nextHandler: IHandler<string, string> | null = null;
 
-    public setNext(handler: Handler<string, string>): Handler<string, string> {
+    public setNext(handler: IHandler<string, string>): IHandler<string, string> {
         this.nextHandler = handler;
         return handler;
     }
@@ -47,7 +47,7 @@ class PutHandler extends AbstractHandler {
 }
 
 // client code
-const clientCode = (handler: Handler): void => {
+const clientCode = (handler: IHandler): void => {
     const methods = ['GET', 'POST', 'PUT'];
 
     methods.forEach(method => {
