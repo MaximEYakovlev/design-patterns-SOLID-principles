@@ -4,6 +4,7 @@ interface IFlyweight {
 
 interface IFlyweightFactory {
     getFlyweight(sharedState: string[]): IFlyweight;
+    listFlyweights(): void;
 }
 
 class Flyweight implements IFlyweight {
@@ -45,5 +46,15 @@ class FlyweightFactory implements IFlyweightFactory {
         }
 
         return this.flyweights[key];
+    }
+
+    public listFlyweights(): void {
+        const count = Object.keys(this.flyweights).length;
+
+        console.log(`FlyweightFactory: ${count} flyweights:`);
+
+        for (const key in this.flyweights) {
+            console.log(key)
+        }
     }
 }
