@@ -37,7 +37,12 @@ class FlyweightFactory implements IFlyweightFactory {
     public getFlyweight(sharedState: string[]): IFlyweight {
         const key = this.getKey(sharedState);
 
-        // some logic
+        if (!this.flyweights[key]) {
+            console.log('FlyweightFactory: flyweight not found, creating a new one');
+            this.flyweights[key] = new Flyweight(sharedState);
+        } else {
+            console.log('FlyweightFactory: reusing an existing flyweight');
+        }
 
         return this.flyweights[key];
     }
