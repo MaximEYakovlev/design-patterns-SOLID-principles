@@ -68,13 +68,13 @@ const factory = new FlyweightFactory([
 factory.listFlyweights();
 
 const addRequest = (
-    ff: IFlyweightFactory,
+    factory: IFlyweightFactory,
     description: string,
     method: string,
     protocol: string,
     header: string): void => {
     console.log('Client: Adding request');
-    const flyweight = ff.getFlyweight([method, protocol, header]);
+    const flyweight = factory.getFlyweight([method, protocol, header]);
     flyweight.operation(description);
 }
 
