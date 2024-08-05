@@ -1,5 +1,5 @@
 interface IFlyweight {
-    operation(uniqueState: string[]): void;
+    operation(uniqueState: string): void;
 }
 
 interface IFlyweightFactory {
@@ -14,7 +14,7 @@ class Flyweight implements IFlyweight {
         this.sharedState = sharedState;
     }
 
-    public operation(uniqueState: string[]): void {
+    public operation(uniqueState: string): void {
         const sState = JSON.stringify(this.sharedState);
         const uState = JSON.stringify(uniqueState);
         console.log(`Flyweight: shared (${sState}) and unique (${uState}) state`);
@@ -54,7 +54,31 @@ class FlyweightFactory implements IFlyweightFactory {
         console.log(`FlyweightFactory: ${count} flyweights:`);
 
         for (const key in this.flyweights) {
-            console.log(key)
+            console.log(key);
         }
     }
 }
+
+// client code
+const factory = new FlyweightFactory([
+    ['GET', 'HTTP/1.1', 'Host: www.example.re'],
+    ['POST', 'HTTP/1.1', 'Host: www.example.re'],
+    ['PUT', 'HTTP/1.1', 'Host: www.example.re']
+]);
+factory.listFlyweights();
+
+const addRequest = (
+    ff: IFlyweightFactory,
+    description: string,
+    method: string,
+    protocol: string,
+    header: string): void => {
+    console.log('Client: Adding request');
+    const flyweight = ff.getFlyweight([method, protocol, header]);
+    flyweight.operation(description);
+}
+
+addRequest(factory, 'idempotent: true', 'GET', 'HTTP/1.1', 'Host: www.example.re');
+addRequest(factory, 'idempotent: false', 'PATCH', 'HTTP/1.1', 'Host: www.example.re');
+
+factory.listFlyweights();
