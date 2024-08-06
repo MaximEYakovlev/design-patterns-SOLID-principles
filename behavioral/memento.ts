@@ -102,3 +102,31 @@ class Caretaker implements ICaretaker {
         })
     }
 }
+
+// client code
+interface ICallbackFunction {
+    (): void;
+}
+
+function loop(cyclesNum: number, fnOne: ICallbackFunction, fnTwo?: ICallbackFunction): void {
+    for (let i = 0; i < cyclesNum; i++) {
+        fnOne();
+        if (fnTwo) {
+            fnTwo();
+        }
+    }
+}
+
+const initialState = 'zoo_fun_one';
+
+const originator = new Originator(initialState);
+const caretaker = new Caretaker(originator);
+
+const job = originator.doSomeJob.bind(originator);
+const backup = caretaker.backup.bind(caretaker);
+const rollback = caretaker.undo.bind(caretaker);
+
+loop(3, backup, job);
+caretaker.showHistory();
+loop(2, rollback);
+caretaker.showHistory();
