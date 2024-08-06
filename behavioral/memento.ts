@@ -10,6 +10,12 @@ interface IMemento {
     getDate(): string;
 }
 
+interface ICaretaker {
+    backup(): void;
+    undo(): void;
+    showHistory(): void;
+}
+
 class Originator implements IOriginator {
     private state: string;
 
@@ -63,5 +69,36 @@ class Memento implements IMemento {
     }
 }
 
-// to do
-class Caretaker { }
+class Caretaker implements ICaretaker {
+    private mementos: IMemento[] = [];
+    private originator: IOriginator;
+
+    constructor(originator: IOriginator) {
+        this.originator = originator;
+    }
+
+    public backup(): void {
+        console.log('Caretaker: saving Originator\'s state');
+        this.mementos.push(this.originator.save());
+    }
+
+    public undo(): void {
+        if (!this.mementos.length) {
+            return;
+        }
+
+        const memento = this.mementos.pop();
+
+        if (memento) {
+            console.log(`Caretaker: state rollback to: ${memento.getName()}`);
+            this.originator.restore(memento);
+        }
+    }
+
+    public showHistory(): void {
+        console.log('Caretaker: list of mementos:');
+        this.mementos.forEach((memento) => {
+            console.log(memento.getName());
+        })
+    }
+}
