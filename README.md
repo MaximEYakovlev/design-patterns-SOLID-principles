@@ -1,1 +1,1 @@
-design patterns
+Design Patterns and SOLID Principles
