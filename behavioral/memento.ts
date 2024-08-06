@@ -104,11 +104,11 @@ class Caretaker implements ICaretaker {
 }
 
 // client code
-interface ICallbackFunction {
+interface ICallback {
     (): void;
 }
 
-function loop(cyclesNum: number, fnOne: ICallbackFunction, fnTwo?: ICallbackFunction): void {
+const loop = (cyclesNum: number, fnOne: ICallback, fnTwo?: ICallback): void => {
     for (let i = 0; i < cyclesNum; i++) {
         fnOne();
         if (fnTwo) {
