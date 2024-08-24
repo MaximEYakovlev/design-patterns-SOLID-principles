@@ -12,4 +12,5 @@ class Fun {
 // use case
 const objOne = new Fun();
 const objTwo = new Fun();
+
 console.log(objOne === objTwo);

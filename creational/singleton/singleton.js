@@ -1,23 +1,25 @@
-const Singleton = (function () {
-    let instance;
+class Fun {
+    static instance = null;
 
-    function createInstance() {
-        const object = new Object('I am the instance');
-        return object;
+    constructor() {
+        if (Fun.instance) {
+            throw new Error("use Fun.getInstance() method to get the singleton instance");
+        }
+
+        Fun.instance = this;
     }
 
-    return {
-        getInstance: function () {
-            if (!instance) {
-                instance = createInstance();
-            }
-            return instance;
+    static getInstance() {
+        if (!Fun.instance) {
+            Fun.instance = new Fun();
         }
-    };
-})();
+
+        return Fun.instance;
+    }
+}
 
 // use case
-const instanceOne = Singleton.getInstance();
-const instanceTwo = Singleton.getInstance();
+const objOne = Fun.getInstance();
+const objTwo = Fun.getInstance();
 
-console.log(instanceOne === instanceTwo);
+console.log(objOne === objTwo);
