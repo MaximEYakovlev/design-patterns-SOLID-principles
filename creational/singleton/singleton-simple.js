@@ -8,3 +8,8 @@ class Fun {
         Fun.instance = this;
     }
 }
+
+// use case
+const objOne = new Fun();
+const objTwo = new Fun();
+console.log(objOne === objTwo);
