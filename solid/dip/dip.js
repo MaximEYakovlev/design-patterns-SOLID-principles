@@ -16,6 +16,8 @@ class LocalStorage {
     }
 }
 
+// method parameters injection
+// ***************************
 class Repository {
     save(data, storage) {
         storage.save(data);
@@ -27,3 +29,22 @@ const fileSystem = new FileSystem();
 const repository = new Repository();
 
 repository.save('some data', fileSystem);
+
+// constructor injection
+// *********************
+class Repository {
+    constructor(storage) {
+        this.storage = storage;
+    }
+
+    save(data) {
+        this.storage.save(data);
+    }
+}
+
+// use case
+const fileSystem = new FileSystem();
+const repository = new Repository(fileSystem);
+
+repository.save('some data');
+
