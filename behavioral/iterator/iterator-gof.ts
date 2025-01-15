@@ -1,8 +1,41 @@
+/**
+ * The `IIterator<T>` interface defines a basic contract for an iterator
+ * that allows sequential traversal of a collection of elements of type `T`.
+ * 
+ * @template T The type of elements being iterated over.
+ */
 interface IIterator<T> {
+    /**
+     * Returns the current element in the collection.
+     * 
+     * @returns {T} The current element.
+     */
     current(): T;
+
+    /**
+     * Advances the iterator to the next element and returns it.
+     * 
+     * @returns {T} The next element.
+     */
     next(): T;
+
+    /**
+     * Returns the key (index) of the current element.
+     * 
+     * @returns {number} The current key.
+     */
     key(): number;
+
+    /**
+     * Checks if the current element is valid.
+     * 
+     * @returns {boolean} `true` if the current element is valid, otherwise `false`.
+     */
     valid(): boolean;
+
+    /**
+     * Resets the iterator to the initial state.
+     */
     reset(): void;
 }
 
